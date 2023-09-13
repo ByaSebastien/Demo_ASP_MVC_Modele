@@ -1,0 +1,85 @@
+﻿@model GUI.MemberDetail
+@inject GUI.SessionManager _session
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>Detail</h1>
+
+<div>
+    <h4>MemberDetail</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Pseudo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Pseudo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" asp-controller="Game">Back to List</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nom
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Nombre de joueur minimum
+            </th>
+            <th>
+                Nombre de joueur maximum
+            </th>
+            <th>
+                Age minimum
+            </th>
+            <th>
+                Coop
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Favorites)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nb_Player_Min)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nb_Player_Max)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.IsCoop)
+                </td>
+                @if (_session.CurrentMember is not null)
+                {
+                    <td>
+                        <a asp-action="DeleteFavorite" asp-route-idGame="@item.Id">Supprimer des favoris</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
